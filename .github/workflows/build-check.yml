@@ -47,5 +47,7 @@ jobs:
           key: platformio-${{ hashFiles('**/platformio.ini') }}
       - name: Setup PlatformIO
         run: pip install platformio
+      - name: Create dummy secrets data
+        run: cp include/comm_secrets_template.h include/comm_secrets.h
       - name: Run PlatformIO build
         run: pio run
