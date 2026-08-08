@@ -1,0 +1,51 @@
+name: Check files are clean and code is health
+
+on: push
+
+jobs:
+  trailing-spaces-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Source checkout
+        uses: actions/checkout@v7
+      - name: Trailing whitespaces check
+        run: |
+          text_files=`find ./ -type f -not -path './.git/*' | xargs -I {} file --mime {} | grep -v 'charset=binary' | sed -E -e 's/: .*$//g'`
+
+          violating_files=""
+
+          while read file; do
+            # Are there lines what has trailing whitespaces
+            if [ "`grep -E '\s+$' \"$file\"`" != "" ]; then
+              violating_files="$violating_files$file%0A"  # %0A for newline at GitHub Actions log
+            fi
+          done << EOF
+            `echo "$text_files"`
+          EOF
+
+          if [ "$violating_files" != "" ]; then
+            echo "::error ::There are some violating files%0A$violating_files"
+            exit 1
+          fi
+
+
+  pio-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Source checkout
+        uses: actions/checkout@v7
+      - name: Setup Python for PlatformIO
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+      - name: Cache restore
+        uses: actions/cache@v6
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.platformio
+          key: platformio-${{ hashFiles('**/platformio.ini') }}
+      - name: Setup PlatformIO
+        run: pip install platformio
+      - name: Run PlatformIO build
+        run: pio run
