@@ -8,8 +8,13 @@
 #ifndef _COMM_SECRETS_H_
 #define _COMM_SECRETS_H_
 
+#include <WString.h>
+
+
 const char *WIFI_SSID = "";
 const char *WIFI_PASS = "";
+
+const String DISCORD_WEBHOOK_URL = "";
 
 
 #endif /* _COMM_SECRETS_H_ */
