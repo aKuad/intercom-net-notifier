@@ -26,7 +26,7 @@ int discord_webhook_post(String webhook_url, String message_to_post) {
   wifi_client.setInsecure();
   http_client.begin(wifi_client, webhook_url);
   http_client.addHeader("Content-Type", "application/json");
-  int response_code = http_client.POST("{\"content\": \"" + message_to_post + "\"}");
+  int response_code = http_client.POST("{\"content\":\"" + message_to_post + "\"}");
   http_client.end();
 
   return response_code;
