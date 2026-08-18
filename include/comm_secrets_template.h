@@ -15,6 +15,7 @@ const char *WIFI_SSID = "";
 const char *WIFI_PASS = "";
 
 const String DISCORD_WEBHOOK_URL = "";
+const String LINE_CHANNEL_ACCESS_TOKEN = "";
 
 
 #endif /* _COMM_SECRETS_H_ */

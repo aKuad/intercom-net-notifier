@@ -31,3 +31,29 @@ int discord_webhook_post(String webhook_url, String message_to_post) {
 
   return http_status;
 }
+
+
+/**
+ * Post a message to LINE via Messaging API
+ *
+ * @note It sends a message to all friends (registered users) of specified token's account
+ *
+ * @warning It skips SSL certification verification for simple implementation. NOT FOR CRITICAL USE.
+ *
+ * @param[in] channel_access_token Messaging API channel access token
+ * @param[in] message_to_post Message text to post - double-quotation must be escaped: \" (on c code: \\\")
+ * @return HTTP response status code
+ */
+int line_broadcast_post(String channel_access_token, String message_to_post) {
+  WiFiClientSecure wifi;
+  HTTPClient http;
+
+  wifi.setInsecure();
+  http.begin(wifi, "https://api.line.me/v2/bot/message/broadcast");
+  http.addHeader("Content-Type", "application/json");
+  http.addHeader("Authorization", "Bearer " + channel_access_token);
+  int http_status = http.POST("{\"messages\":[{\"type\":\"text\",\"text\":\"" +  message_to_post + "\"}]}");
+  http.end();
+
+  return http_status;
+}
