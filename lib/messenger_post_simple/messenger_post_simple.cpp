@@ -20,14 +20,14 @@
  * @return HTTP response status code
  */
 int discord_webhook_post(String webhook_url, String message_to_post) {
-  WiFiClientSecure wifi_client;
-  HTTPClient http_client;
+  WiFiClientSecure wifi;
+  HTTPClient http;
 
-  wifi_client.setInsecure();
-  http_client.begin(wifi_client, webhook_url);
-  http_client.addHeader("Content-Type", "application/json");
-  int response_code = http_client.POST("{\"content\":\"" + message_to_post + "\"}");
-  http_client.end();
+  wifi.setInsecure();
+  http.begin(wifi, webhook_url);
+  http.addHeader("Content-Type", "application/json");
+  int http_status = http.POST("{\"content\":\"" + message_to_post + "\"}");
+  http.end();
 
-  return response_code;
+  return http_status;
 }
