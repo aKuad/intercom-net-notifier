@@ -12,6 +12,7 @@
 
 
 /* File internal constants */
+static const uint32_t SIGNAL_INTERVAL_MS = 10000;
 static const uint8_t ONBOARD_LED  = 2;  // At ESP32 Dev Module
 static const uint8_t INTERCOM_SIG = 4;
 static const uint8_t TEST_KEY     = 15;
@@ -53,6 +54,8 @@ void loop() {
     digitalWrite(ONBOARD_LED, HIGH); delay(100);
     digitalWrite(ONBOARD_LED,  LOW); delay(100);
     digitalWrite(ONBOARD_LED, HIGH); delay(100);
+
+    delay(SIGNAL_INTERVAL_MS);
   }
 
   delay(250); // Prevent unnecessary too fast loop
