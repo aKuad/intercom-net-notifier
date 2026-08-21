@@ -12,8 +12,9 @@
 
 
 /* File internal constants */
-static const uint8_t ONBOARD_LED = 2;   // At ESP32 Dev Module
-static const uint8_t TEST_KEY    = 15;
+static const uint8_t ONBOARD_LED  = 2;  // At ESP32 Dev Module
+static const uint8_t INTERCOM_SIG = 4;
+static const uint8_t TEST_KEY     = 15;
 
 
 /* Setup section - runs once */
@@ -21,6 +22,7 @@ void setup() {
   pinMode(ONBOARD_LED, OUTPUT);
   digitalWrite(ONBOARD_LED, LOW);
   pinMode(TEST_KEY, INPUT);
+  pinMode(INTERCOM_SIG, INPUT);
 
   WiFi.begin(WIFI_SSID, WIFI_PASS);
   // When no Wi-Fi module detected, blink indication and do nothing more
@@ -42,7 +44,7 @@ void loop() {
     digitalWrite(ONBOARD_LED, LOW);
 
   // On signal detected process
-  if(WiFi.isConnected() && digitalRead(TEST_KEY)) {
+  if(WiFi.isConnected() && (digitalRead(INTERCOM_SIG) || digitalRead(TEST_KEY))) {
     discord_webhook_post(DISCORD_WEBHOOK_URL, "Doorbell rang");
     line_broadcast_post(LINE_CHANNEL_ACCESS_TOKEN, "Doorbell rang");
 
