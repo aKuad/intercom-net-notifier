@@ -36,9 +36,9 @@ int discord_webhook_post(String webhook_url, String message_to_post) {
 /**
  * Post a message to LINE via Messaging API
  *
- * @note It sends a message to all friends (registered users) of specified token's account
- *
  * @warning It skips SSL certification verification for simple implementation. NOT FOR CRITICAL USE.
+ *
+ * @note It sends a message to all friends (registered users) of specified token's account
  *
  * @param[in] channel_access_token Messaging API channel access token
  * @param[in] message_to_post Message text to post - double-quotation must be escaped: \" (on c code: \\\")
