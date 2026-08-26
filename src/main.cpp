@@ -15,10 +15,10 @@
 
 /* File internal constants */
 static const uint32_t SIG_INTERVAL_MS = 10000;
-static const uint8_t ONBOARD_LED  = 2;  // At ESP32 Dev Module
-static const uint8_t INTERCOM_SIG = 4;
+static const uint8_t  ONBOARD_LED     = 2;  // At ESP32 Dev Module
+static const uint8_t  INTERCOM_SIG    = 4;
 #ifdef TEST_KEY_ENABLE
-  static const uint8_t TEST_KEY     = 15;
+  static const uint8_t TEST_KEY = 15;
 #endif
 
 /* Setup section - runs once */
